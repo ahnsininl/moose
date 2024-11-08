@@ -191,8 +191,7 @@ INSFVTKESourceSink::computeQpResidual()
       if (_epsilon) // wall functions for epsilon-based formulation
       {
         const auto destruction_visc = 2.0 * wall_mu / Utility::pow<2>(distance_vec[i]) / tot_weight;
-        const auto destruction_log = std::pow(_C_mu, 0.75) * rho *
-                                     std::pow(_var(elem_arg, old_state), 0.5) /
+        const auto destruction_log = std::pow(_C_mu, 0.75) * rho * std::pow(TKE, 0.5) /
                                      (NS::von_karman_constant * distance_vec[i]) / tot_weight;
         if (y_plus < 11.25)
         {
@@ -203,8 +202,9 @@ INSFVTKESourceSink::computeQpResidual()
         else
         {
           destruction += destruction_log;
-          production += tau_w * std::pow(_C_mu, 0.25) /
-                        std::sqrt(_var(elem_arg, old_state) + 1e-10) /
+          if (_newton_solve)
+            destruction += 0 * destruction_visc;
+          production += tau_w * std::pow(_C_mu, 0.25) / std::sqrt(TKE) /
                         (NS::von_karman_constant * distance_vec[i]) / tot_weight;
         }
       }
@@ -239,6 +239,9 @@ INSFVTKESourceSink::computeQpResidual()
     }
 
     residual = (destruction - production) * _var(elem_arg, state);
+    // Additional 0-value term to make sure new derivative entries are not added during the solve
+    if (_newton_solve)
+      residual += 0 * (*_epsilon)(elem_arg, old_state);
   }
   else // Bulk formulation
   {
@@ -377,7 +380,7 @@ INSFVTKESourceSink::computeQpResidual()
     residual = destruction - production;
   }
 
-  residual = (destruction - production) * _var(elem_arg, state);
+  // residual = (destruction - production) * _var(elem_arg, state);
 
   // Additional 0-value term to make sure new derivative entries are not added during the solve
   if (_newton_solve)
