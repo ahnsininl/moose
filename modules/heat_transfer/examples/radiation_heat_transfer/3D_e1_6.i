@@ -40,7 +40,7 @@ kappa8tomax = 0.4
 [Mesh]
   [mesh]
       type = FileMeshGenerator
-      file = 'gend_mesh/fine_80_30_733_34.cpr'
+      file = 'gend_mesh/fine_80_30_733_36.cpr'
     []
 []
 

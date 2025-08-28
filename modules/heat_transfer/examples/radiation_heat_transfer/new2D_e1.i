@@ -13,9 +13,9 @@ k = 1
 h = 0.001
 Tb = 300
 T0 = 1000
-epsilon = 0.1
+epsilon = 1.0
 endt = 0.001
-dt = 2.5e-6 #0.00005 #2.5e-6
+dt = 2.5e-5#0.00005 #2.5e-5#
 
 nu_min = 1e-2
 nu1 = 2.93e13
@@ -40,10 +40,9 @@ kappa8tomax = 0.4
 [Mesh]
   [mesh]
       type = FileMeshGenerator
-      file = 'gend_mesh/fine_80_30_733_34.cpr'
+      file = 'new_2D.cpr'
     []
 []
-
 [Problem]
   nl_sys_names = 'T
                   psi11 psi12 psi13 psi14 psi15 psi16 psi17 psi18
@@ -469,7 +468,7 @@ kappa8tomax = 0.4
 [FVBCs]
   [BC11]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi11
     Tb = ${Tb}
     nu = ${nu1}
@@ -486,7 +485,7 @@ kappa8tomax = 0.4
 
   [BC21]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi21
     Tb = ${Tb}
     nu = ${nu1}
@@ -503,7 +502,7 @@ kappa8tomax = 0.4
 
   [BC12]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi12
     Tb = ${Tb}
     nu = ${nu2}
@@ -520,7 +519,7 @@ kappa8tomax = 0.4
 
   [BC22]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi22
     Tb = ${Tb}
     nu = ${nu2}
@@ -537,7 +536,7 @@ kappa8tomax = 0.4
 
   [BC13]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi13
     Tb = ${Tb}
     nu = ${nu3}
@@ -554,7 +553,7 @@ kappa8tomax = 0.4
 
   [BC23]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi23
     Tb = ${Tb}
     nu = ${nu3}
@@ -571,7 +570,7 @@ kappa8tomax = 0.4
 
   [BC14]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi14
     Tb = ${Tb}
     nu = ${nu4}
@@ -588,7 +587,7 @@ kappa8tomax = 0.4
 
   [BC24]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi24
     Tb = ${Tb}
     nu = ${nu4}
@@ -605,7 +604,7 @@ kappa8tomax = 0.4
 
   [BC15]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi15
     Tb = ${Tb}
     nu = ${nu5}
@@ -622,7 +621,7 @@ kappa8tomax = 0.4
 
   [BC25]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi25
     Tb = ${Tb}
     nu = ${nu5}
@@ -639,7 +638,7 @@ kappa8tomax = 0.4
 
   [BC16]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi16
     Tb = ${Tb}
     nu = ${nu6}
@@ -656,7 +655,7 @@ kappa8tomax = 0.4
 
   [BC26]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi26
     Tb = ${Tb}
     nu = ${nu6}
@@ -673,7 +672,7 @@ kappa8tomax = 0.4
 
   [BC17]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi17
     Tb = ${Tb}
     nu = ${nu7}
@@ -690,7 +689,7 @@ kappa8tomax = 0.4
 
   [BC27]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi27
     Tb = ${Tb}
     nu = ${nu7}
@@ -707,7 +706,7 @@ kappa8tomax = 0.4
 
   [BC18]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi18
     Tb = ${Tb}
     nu = ${nu8}
@@ -724,7 +723,7 @@ kappa8tomax = 0.4
 
   [BC28]
     type = FVSP3ThermalRadiationBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = psi28
     Tb = ${Tb}
     nu = ${nu8}
@@ -741,7 +740,7 @@ kappa8tomax = 0.4
 
   [BC_temperature]
     type = FVSP3TemperatureBC
-    boundary = 'left right top bottom front back'
+    boundary = 'left right top bottom'
     variable = T
     Tb = ${Tb}
     n1 = ${n1}
@@ -755,8 +754,15 @@ kappa8tomax = 0.4
   []
 []
 
-[Debug]
-  show_actions = true
+[VectorPostprocessors]
+  [y0]
+    num_points = 102
+    start_point = '-0.5 0.0 0.0'
+    end_point = '0.5 0.0 0.0'
+    sort_by = 'x'
+    variable = T
+    type = LineValueSampler
+  []
 []
 
 [Executioner]
@@ -777,17 +783,14 @@ kappa8tomax = 0.4
   end_time = ${endt}
 []
 
-# [VectorPostprocessors]
-#   [yz0]
-#     num_points = 102
-#     start_point = '-0.5 0.0 0.0'
-#     end_point = '0.5 0.0 0.0'
-#     sort_by = 'x'
-#     variable = T
-#     type = LineValueSampler
-#   []
-# []
-
 [Outputs]
-  exodus = true
+  [e]
+    type = Exodus
+    # exodus = true
+  []
+  [csv]
+    type = CSV
+    # csv = true
+    execute_on = final
+  []
 []

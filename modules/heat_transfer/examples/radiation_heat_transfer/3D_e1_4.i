@@ -13,9 +13,9 @@ k = 1
 h = 0.001
 Tb = 300
 T0 = 1000
-epsilon = 1.0
+epsilon = 0.1
 endt = 0.001
-dt = 2.5e-5 #0.00005 #2.5e-6
+dt = 2.5e-6 #0.00005 #2.5e-6
 
 nu_min = 1e-2
 nu1 = 2.93e13
@@ -40,7 +40,7 @@ kappa8tomax = 0.4
 [Mesh]
   [mesh]
       type = FileMeshGenerator
-      file = 'gend_mesh/fine_80_30_733_27.cpr'
+      file = 'gend_mesh/fine_80_30_733_31.cpr'
     []
 []
 
